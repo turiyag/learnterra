@@ -17,11 +17,11 @@ from util import pretty_json
 
 EPILOG = __doc__
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 
 def better_jsonify(obj):
-    return app.response_class(pretty_json(obj), mimetype=app.config["JSONIFY_MIMETYPE"])
+    return application.response_class(pretty_json(obj), mimetype=application.config["JSONIFY_MIMETYPE"])
 
 
 def as_json(func):
@@ -31,19 +31,19 @@ def as_json(func):
     return as_json_wrapper
 
 
-@app.route("/")
+@application.route("/")
 def hello():
     return better_jsonify({"msg": "Hello World!!!", "now": arrow.get()})
 
 
-@app.route("/x")
+@application.route("/x")
 @as_json
 def x():
     return {"x": "Hello World!!!", "now": arrow.get()}
 
 
 def main(port=8080):
-    app.run(port=port)
+    application.run(port=port)
 
 
 if __name__ == "__main__":

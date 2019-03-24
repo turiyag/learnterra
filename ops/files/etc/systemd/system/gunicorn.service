@@ -9,8 +9,7 @@ User=learnterra
 Group=learnterra
 RuntimeDirectory=gunicorn
 WorkingDirectory=/opt/learnterra/app/src
-ExecStart=/opt/learnterra/venv/bin/gunicorn --pid /run/gunicorn/pid   \
-          --bind unix:/run/gunicorn/socket learnterra.wsgi
+ExecStart=/opt/learnterra/venv/bin/gunicorn --pid /run/gunicorn/pid --bind unix:/run/gunicorn/socket app
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true
