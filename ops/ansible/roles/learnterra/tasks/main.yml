@@ -46,6 +46,7 @@
   pip:
     requirements: "{{ app_dir }}/requirements.txt"
     virtualenv: "{{ venv_dir }}"
+    virtualenv_command: "python3 -m venv"
   notify:
     - Restart gunicorn
 
