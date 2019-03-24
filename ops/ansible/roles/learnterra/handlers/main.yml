@@ -1,7 +1,7 @@
 
 - name: Restart gunicorn
   systemd:
-    name: gunicorn.socket
+    name: gunicorn
     state: restarted
 
 - name: Restart nginx
