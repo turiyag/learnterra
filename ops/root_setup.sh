@@ -5,19 +5,24 @@ APP_DIR="$APP_HOME/app"
 VENV_DIR="$APP_HOME/venv"
 
 function setup_app {
-    yum install git python3 -y
+    if ! which git; then
+        yum install git python3 -y
+    fi
+    if ! which python3; then
+        yum install git python3 -y
+    fi
 
-    if [[ -d /etc/bashrc.extensions ]]; then
+    if ! [[ -d /etc/bashrc.extensions ]]; then
         git clone https://github.com/maludwig/bashrc /tmp/bashrc
         /tmp/bashrc/install
     fi
 
-    if [[ -d "$APP_HOME" ]]; then
+    if ! [[ -d "$APP_HOME" ]]; then
         useradd --home-dir "$APP_HOME" --create-home learnterra
     fi
 
     # Setup app
-    if [[ -d "$APP_DIR" ]]; then
+    if ! [[ -d "$APP_DIR" ]]; then
         git clone https://github.com/turiyag/learnterra.git "$APP_DIR"
     fi
     cd "$APP_DIR"
