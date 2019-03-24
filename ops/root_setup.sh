@@ -12,6 +12,12 @@ git clone https://github.com/maludwig/bashrc /tmp/bashrc
 useradd --home-dir "$APP_HOME" --create-home learnterra
 
 # Setup app
+
+APP_HOME='/opt/learnterra'
+APP_DIR="$APP_HOME/app"
+VENV_DIR="$APP_HOME/venv"
+
+pip3 install ansible
 git clone https://github.com/turiyag/learnterra.git "$APP_DIR"
 sudo -u learnterra "$APP_DIR/ops/user_setup.sh"
 

@@ -1,5 +1,5 @@
 ---
 
-hosts: webservers
-roles:
-  - learnterra
+- hosts: webserver
+  roles:
+    - learnterra

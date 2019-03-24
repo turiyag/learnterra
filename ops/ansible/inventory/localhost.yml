@@ -4,5 +4,6 @@ all:
   hosts:
     localhost:
   children:
-    webservers:
-      localhost:
+    webserver:
+      hosts:
+        localhost:
