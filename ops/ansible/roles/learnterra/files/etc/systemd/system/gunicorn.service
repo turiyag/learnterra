@@ -1,6 +1,5 @@
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn.socket
 After=network.target
 
 [Service]
@@ -9,7 +8,7 @@ User=learnterra
 Group=learnterra
 RuntimeDirectory=gunicorn
 WorkingDirectory=/opt/learnterra/app/src
-ExecStart=/opt/learnterra/venv/bin/gunicorn --pid /run/gunicorn/pid --bind unix:/run/gunicorn/socket app
+ExecStart=/opt/learnterra/venv/bin/gunicorn --pid /run/gunicorn/pid --bind 127.0.0.1:8080 app
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true

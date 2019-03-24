@@ -17,10 +17,10 @@ APP_HOME='/opt/learnterra'
 APP_DIR="$APP_HOME/app"
 VENV_DIR="$APP_HOME/venv"
 
+sudo git clone https://github.com/turiyag/learnterra.git "$APP_DIR"
+
 pip3 install ansible virtualenv --user
-git clone https://github.com/turiyag/learnterra.git "$APP_DIR"
-cd "$APP_DIR"/ops/ansible
-play -vv r-learnterra.yml -i inventory/localhost.yml
+sudo "$HOME/.local/bin/ansible-playbook" -vv "$APP_DIR/ops/ansible/r-learnterra.yml" -i "$APP_DIR/ops/ansible/inventory/localhost.yml"
 
 sudo -u learnterra "$APP_DIR/ops/user_setup.sh"
 

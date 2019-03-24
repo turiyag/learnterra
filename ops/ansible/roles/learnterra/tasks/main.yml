@@ -12,6 +12,11 @@
     name: www
     state: present
 
+- name: Create the gunicorn group
+  group:
+    name: gunicorn
+    state: present
+
 - name: Add the gunicorn user
   become: yes
   user:
@@ -22,7 +27,7 @@
     groups: www
     append: yes
 
-- name: Setup gunicorn socket and service
+- name: Setup gunicorn and nginx config
   become: yes
   copy:
     src: "{{ item }}"
@@ -31,7 +36,6 @@
     group: root
     mode: 0644
   with_items:
-    - etc/systemd/system/gunicorn.socket
     - etc/systemd/system/gunicorn.service
     - etc/nginx/nginx.conf
   notify:
@@ -42,13 +46,12 @@
   pip:
     requirements: "{{ app_dir }}/requirements.txt"
     virtualenv: "{{ venv_dir }}"
-    virtualenv_command: "python3 -m venv"
   notify:
     - Restart gunicorn
 
 - name: Start gunicorn service
   systemd:
-    name: gunicorn.socket
+    name: gunicorn
     state: started
 
 - name: Start nginx service
