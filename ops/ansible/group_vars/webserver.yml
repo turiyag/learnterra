@@ -3,3 +3,6 @@
 app_home: /opt/learnterra
 app_dir: "{{ app_home }}/app"
 venv_dir: "{{ app_home }}/venv"
+
+amazon_linux_extras:
+ - nginx1.12

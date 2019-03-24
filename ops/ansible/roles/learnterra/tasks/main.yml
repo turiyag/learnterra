@@ -1,11 +1,11 @@
 ---
 
-
 - name: Enable amazon-linux-extras packages
-  shell: "amazon-linux-extras enable {{item}}"
+  shell: "amazon-linux-extras install {{ item }} -y"
   become: yes
-  with_items:
-    - nginx1.12
+  register: ale_enable
+  changed_when: "Nothing to do" not in ale_enable.stdout
+  with_items: "{{ amazon_linux_extras }}"
 
 #- name: Add nginx repo
 #  become: yes
@@ -14,10 +14,15 @@
 #    description: nginx repo
 #    baseurl: https://nginx.org/packages/mainline/centos/7/$basearch/
 
-- name: Install nginx
-  become: yes
-  yum:
-    name: nginx
+#- name: Install nginx
+#  become: yes
+#  yum:
+#    name: nginx
+
+- name: Create the www group
+  group:
+    name: www
+    state: present
 
 - name: Add the gunicorn user
   become: yes
@@ -46,6 +51,7 @@
   pip:
     requirements: "{{ app_dir }}/requirements.txt"
     virtualenv: "{{ venv_dir }}"
+    virtualenv_command: "python3 -m venv"
 
 - name: Start gunicorn service
   systemd:
