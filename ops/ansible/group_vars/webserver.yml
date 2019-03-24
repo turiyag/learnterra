@@ -1,3 +1,4 @@
+---
 
 app_home: /opt/learnterra
 app_dir: "{{ app_home }}/app"
