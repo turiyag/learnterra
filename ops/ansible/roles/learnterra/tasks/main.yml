@@ -1,0 +1,51 @@
+---
+
+- name: Add nginx repo
+  become: yes
+  yum_repository:
+    name: nginx
+    description: nginx repo
+    baseurl: https://nginx.org/packages/mainline/centos/7/$basearch/
+
+- name: Install nginx
+  become: yes
+  yum:
+    name: nginx
+
+- name: Add the user 'james' with a bash shell, appending the group 'admins' and 'developers' to the user's groups
+  become: yes
+  user:
+    name: gunicorn
+    home: "{{ app_home }}"
+    shell: /bin/bash
+    group: gunicorn
+    groups: www
+    append: yes
+
+- name: Setup gunicorn socket and service
+  become: yes
+  copy:
+    src: "{{ item }}"
+    dest: "/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - etc/systemd/system/gunicorn.socket
+    - etc/systemd/system/gunicorn.service
+    - etc/nginx/nginx.conf
+
+- name: Install python requirements
+  pip:
+    requirements: "{{ app_dir }}/requirements.txt"
+    virtualenv: "{{ venv_dir }}"
+
+- name: Start gunicorn service
+  systemd:
+    name: gunicorn.socket
+    state: started
+
+- name: Start nginx service
+  systemd:
+    name: nginx
+    state: started

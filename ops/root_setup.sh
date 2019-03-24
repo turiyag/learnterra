@@ -19,3 +19,6 @@ sudo -u learnterra "$APP_DIR/ops/user_setup.sh"
 rsync -avi "$APP_DIR/ops/files/" "/"
 systemctl enable gunicorn.socket
 systemctl start gunicorn.socket
+
+# Test gunicorn
+curl --unix-socket /run/gunicorn/socket http
