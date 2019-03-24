@@ -20,7 +20,7 @@
 - name: Add the gunicorn user
   become: yes
   user:
-    name: gunicorn
+    name: learnterra
     home: "{{ app_home }}"
     shell: /bin/bash
     group: gunicorn
@@ -46,7 +46,7 @@
   pip:
     requirements: "{{ app_dir }}/requirements.txt"
     virtualenv: "{{ venv_dir }}"
-    virtualenv_command: "python3 -m venv"
+    virtualenv_command: "/usr/bin/python3 -m venv"
   notify:
     - Restart gunicorn
 
@@ -54,8 +54,10 @@
   systemd:
     name: gunicorn
     state: started
+    enabled: yes
 
 - name: Start nginx service
   systemd:
     name: nginx
     state: started
+    enabled: yes
