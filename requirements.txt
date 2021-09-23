@@ -1,4 +1,4 @@
-ansible==2.7.9
+ansible==4.2.0
 appdirs==1.4.3
 arrow==0.13.1
 asn1crypto==0.24.0
